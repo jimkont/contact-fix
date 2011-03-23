@@ -16,10 +16,7 @@
 
 package com.jimkont.contactFix.activities;
 
-import java.util.ArrayList;
-
 import com.jimkont.contactFix.AsyncCallbackInterface;
-import com.jimkont.contactFix.Helper;
 import com.jimkont.contactFix.R;
 import com.jimkont.contactFix.contacts.ContactData;
 import com.jimkont.contactFix.contacts.ContactsResolver;
@@ -28,22 +25,13 @@ import com.jimkont.contactFix.provider.*;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.Contacts;
-import android.provider.ContactsContract.Data;
-import android.provider.ContactsContract.RawContacts;
-import android.provider.ContactsContract.CommonDataKinds.Email;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.CommonDataKinds.StructuredName;
-import android.provider.ContactsContract.Intents.Insert;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,11 +68,14 @@ public class Result extends Activity implements AsyncCallbackInterface{
 		setContentView(R.layout.result);
 
 		this.btn_AddUpdate = (Button)findViewById(R.id.result_btn_add_update);
+		if (this.extras_contactID != "" && this.extras_contactRawID != "")
+			this.btn_AddUpdate.setText(getString(R.string.result_update_btn));
 		this.btn_AddUpdate.setEnabled(false);
 		this.btn_AddUpdate.setOnClickListener(new OnClickListener() 
 		{
             public void onClick(View v) 
             {
+            	//TODO check for updating a contact
             	
             	long contactID = ContactsResolver.createNewContact(Result.this, contact);
             	
@@ -115,17 +106,18 @@ public class Result extends Activity implements AsyncCallbackInterface{
 	
 	public void onGetResults()
 	{
-		ContactData contact = provider.getContactData();
+		contact = provider.getContactData();
 		
     	if (contact == null)
     	{
-    		this.btn_AddUpdate.setEnabled(true);
     		Toast toast = Toast.makeText(getApplicationContext(), R.string.alert_number_not_found, Toast.LENGTH_LONG);
     		toast.show();
     		this.finish();
     	}
     	else 
     	{
+    		this.btn_AddUpdate.setEnabled(true);
+    		
     		//name
     		if (contact.displayName!="")
         		res_name.setText(contact.displayName);
@@ -160,10 +152,5 @@ public class Result extends Activity implements AsyncCallbackInterface{
     	//dismiss wait dialog
     	if (dialog.isShowing())
     		dialog.dismiss();
-	}
-	
-	private void updateDataTable()
-	{
-		
 	}
 }

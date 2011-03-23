@@ -52,7 +52,7 @@
 		android:layout_height="wrap_content" 
 		android:paddingTop="5sp"
 		android:layout_gravity="right"
-		android:text="save">
+		android:text="@string/result_save_btn">
 		</Button>
 		
 </LinearLayout>			
