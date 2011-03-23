@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="com.jimkont.contactFix"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/ic_launcher_contactfix"
+    				android:label="@string/app_name"
+    				android:debuggable="true">
+        <activity android:name=".ContactFix"
+                  android:label="@string/app_name"
+                  android:theme="@android:style/Theme.NoTitleBar">>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.jimkont.contactFix.activities.LogsTab"
+                 android:label="@string/app_name"
+                 android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+
+        <activity android:name="com.jimkont.contactFix.activities.ContactsTab"
+                 android:label="@string/app_name"
+                 android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+
+        <activity android:name="com.jimkont.contactFix.activities.SearchTab"
+                 android:label="@string/app_name"
+                 android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+
+        <activity android:name="com.jimkont.contactFix.activities.Result"
+                 android:label="@string/app_name">
+        </activity>
+
+    </application>
+
+    <uses-sdk android:minSdkVersion="7" />
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.READ_CONTACTS"/>
+	<uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+	<uses-permission android:name="android.permission.READ_LOGS"/>
+
+</manifest>

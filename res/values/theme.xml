@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ResultTableRaw" >
+		<item name="android:paddingBottom">1dp</item>
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="ResultTableText" >
+		<item name="android:layout_width">fill_parent</item> 
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textSize">15dp</item>
+    </style>
+    
+</resources>
+
