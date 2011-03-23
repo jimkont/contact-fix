@@ -20,7 +20,6 @@ import android.app.Activity;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.*;
@@ -30,26 +29,24 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 
 public class ContactsResolver extends Activity{
 
-	//TODO add update function
-	
 	public static long createNewContact(Activity activity, ContactData contact){
 
 		ContentValues values = new ContentValues();
 		values.put(Data.DISPLAY_NAME, contact.displayName);
 		Uri rawContactUri = activity.getApplicationContext().getContentResolver().insert(RawContacts.CONTENT_URI, values);
-		long rawContactId = ContentUris.parseId(rawContactUri);
-		long contactID = getContactId(activity.getApplicationContext(), rawContactId);
+		long rawContactID = ContentUris.parseId(rawContactUri);
+		long contactID = getContactId(activity.getApplicationContext(), rawContactID);
 
 		values.clear();
 		values.put(Data.MIMETYPE, Data.CONTENT_TYPE);
 		values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.displayName);
-		values.put(Data.RAW_CONTACT_ID, rawContactId);
+		values.put(Data.RAW_CONTACT_ID, rawContactID);
 		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 
 		values.clear();
 		values.put(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE);
 		values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.displayName);
-		values.put(Data.RAW_CONTACT_ID, rawContactId);
+		values.put(Data.RAW_CONTACT_ID, rawContactID);
 		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 
 		// number
@@ -57,43 +54,29 @@ public class ContactsResolver extends Activity{
 		values.put(Phone.NUMBER, contact.telephone);
 		values.put(Phone.TYPE, Phone.TYPE_OTHER);
 		values.put(Phone.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
-		values.put(Data.RAW_CONTACT_ID, rawContactId);
+		values.put(Data.RAW_CONTACT_ID, rawContactID);
 		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 
-		// address
-		values.clear();
-		values.put(StructuredPostal.FORMATTED_ADDRESS, contact.address);
-		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
-		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
-		values.put(Data.RAW_CONTACT_ID, rawContactId);
-		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
-
-		// city
-		values.clear();
-		values.put(StructuredPostal.CITY, contact.city);
-		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
-		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
-		values.put(Data.RAW_CONTACT_ID, rawContactId);
-		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
-		
-		// postal
-		values.clear();
-		values.put(StructuredPostal.POSTCODE, contact.postal);
-		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
-		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
-		values.put(Data.RAW_CONTACT_ID, rawContactId);
-		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
-		
-		// region
-		values.clear();
-		values.put(StructuredPostal.REGION, contact.nomos);
-		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
-		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
-		values.put(Data.RAW_CONTACT_ID, rawContactId);
-		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);		
-				
+		updateContactAddress(activity, contact, rawContactID);
 		
 		return contactID;
+	}
+	
+	public static void updateContactAddress(Activity activity, ContactData contact, long rawContactID){
+
+		// address
+		ContentValues values = new ContentValues();
+		values.put(StructuredPostal.STREET, contact.address);
+		values.put(StructuredPostal.CITY, contact.city);
+		values.put(StructuredPostal.POSTCODE, contact.postal);
+		values.put(StructuredPostal.REGION, contact.nomos);
+		values.put(StructuredPostal.COUNTRY, contact.country);
+		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
+		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
+		values.put(Data.RAW_CONTACT_ID, rawContactID);
+		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
+
+		//return contactID;
 	}
 	
 	public static long getContactId(Context context, long rawContactId) {
