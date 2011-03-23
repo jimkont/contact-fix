@@ -18,7 +18,9 @@
 	
 	<!--result activity	-->
 	<string name="result_header">Search for </string><string name="result_contacts_add">Add to contacts</string>
-	<string name="results_contacts_update">Update contact</string>
+	<string name="results_contacts_update">Update Contact</string>
+	<string name="result_save_btn">Save Contact</string>
+	<string name="result_update_btn">Update contact</string>
 
 	<!--alerts-->
 	<string name="alert_searching">Searching, please wait...</string>
@@ -30,5 +32,7 @@
 	<string name="alert_no_network">Network not available</string>
 	<string name="btn_net_settings">Settings</string>
 	<string name="btn_net_exit">Exit</string>
+	
+	
 	
 </resources>

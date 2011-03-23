@@ -58,23 +58,25 @@ public final class R {
         public static final int tab_search=0x7f030005;
     }
     public static final class string {
-        public static final int alert_incorrect_number=0x7f05000d;
+        public static final int alert_incorrect_number=0x7f05000f;
         /** network check
          */
-        public static final int alert_no_network=0x7f050010;
-        public static final int alert_not_landline=0x7f05000e;
-        public static final int alert_number_not_found=0x7f05000f;
+        public static final int alert_no_network=0x7f050012;
+        public static final int alert_not_landline=0x7f050010;
+        public static final int alert_number_not_found=0x7f050011;
         /** alerts
          */
-        public static final int alert_searching=0x7f05000c;
+        public static final int alert_searching=0x7f05000e;
         public static final int app_name=0x7f050001;
-        public static final int btn_net_exit=0x7f050012;
-        public static final int btn_net_settings=0x7f050011;
+        public static final int btn_net_exit=0x7f050014;
+        public static final int btn_net_settings=0x7f050013;
         public static final int hello=0x7f050000;
         public static final int result_contacts_add=0x7f05000a;
         /** result activity	
          */
         public static final int result_header=0x7f050009;
+        public static final int result_save_btn=0x7f05000c;
+        public static final int result_update_btn=0x7f05000d;
         public static final int results_contacts_update=0x7f05000b;
         public static final int tab_contact_btn_search=0x7f050008;
         /** contact search tab

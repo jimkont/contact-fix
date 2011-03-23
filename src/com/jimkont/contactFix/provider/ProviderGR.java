@@ -72,9 +72,10 @@ public class ProviderGR extends ProviderHTTPPost
 			params.add(new BasicNameValuePair("Image81.x", "0"));
 			params.add(new BasicNameValuePair("Image81.y", "0"));
 	        
-	        //html = executePost("http://www.whitepages.gr/gr/results.aspx", params );
-	        //getContact(html);
-			cn = new ContactData();
+	        html = executePost("http://www.whitepages.gr/gr/results.aspx", params );
+	        getContact(html);
+			/* test
+	        cn = new ContactData();
 			cn.displayName = "Kontokostas Dimitris";
 			cn.lastName="Kontokostas";
 			cn.firstName="Dimitris";
@@ -84,6 +85,8 @@ public class ProviderGR extends ProviderHTTPPost
 			cn.nomos="Imathia";
 			cn.postal="59100";
 			cn.telephone="2331025316";
+			cn.country="Greece";
+			*/
 	        return cn;
 			
 	}
@@ -97,12 +100,16 @@ public class ProviderGR extends ProviderHTTPPost
 			return ;
 		html = html.substring(start-1, html.indexOf("</table>",start)); //trim html string to results table
 		cn = new ContactData();
+		
+		cn.country="Greece";
 
 		//name / last name
 		start = html.indexOf(">")+1;
+		
 		int end = html.indexOf("<", start);
 		cn.displayName = html.substring(start, end).trim();
 		cn.displayName = cn.displayName.replaceAll("&nbsp;", " ");
+		
 		int sep = cn.displayName.indexOf(" ");
 		cn.lastName = cn.displayName.substring(0,sep).trim();
 		cn.firstName = cn.displayName.substring(sep+1, cn.displayName.length()).trim();
@@ -111,6 +118,7 @@ public class ProviderGR extends ProviderHTTPPost
 		start = html.indexOf("<br>", start);
 		start = html.indexOf(">",start)+1;
 		end = html.indexOf("<", start);
+		
 		if (end>start)
 			cn.occupation = html.substring(start, end).trim();
 		else 
@@ -128,24 +136,31 @@ public class ProviderGR extends ProviderHTTPPost
 		start = html.indexOf("<div align=\"left\">", nameEnd);
 		start = html.indexOf(">",start)+1;
 		end = html.indexOf("<", start);
+		
 		if (end>start)
 			cn.city = html.substring(start, end).trim();
+		
 		//reslist_ctl01_straddr
 		start = html.indexOf("reslist_ctl01_straddr", nameEnd);
 		start = html.indexOf(">",start)+1;
 		end = html.indexOf("<", start);
+		
 		if (end>start)
 			cn.address = html.substring(start, end).trim();
+		
 		//reslist_ctl01_nomos
 		start = html.indexOf("reslist_ctl01_nomos", nameEnd);
 		start = html.indexOf(">",start)+1;
 		end = html.indexOf("<", start);
+		
 		if (end>start)
 			cn.nomos = html.substring(start, end).trim();
+		
 		//reslist_ctl01_postal
 		start = html.indexOf("reslist_ctl01_postal", nameEnd);
 		start = html.indexOf(">",start)+1;
 		end = html.indexOf("<", start);
+		
 		if (end>start)
 			cn.postal = html.substring(start, end).trim();
 		

@@ -59,16 +59,16 @@ public class ContactsResolver extends Activity{
 		values.put(Phone.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
 		values.put(Data.RAW_CONTACT_ID, rawContactId);
 		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
-		
-		// number
+
+		// address
 		values.clear();
-		values.put(Phone.NUMBER, contact.telephone);
-		values.put(Phone.TYPE, Phone.TYPE_OTHER);
-		values.put(Phone.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
+		values.put(StructuredPostal.FORMATTED_ADDRESS, contact.address);
+		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
+		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
 		values.put(Data.RAW_CONTACT_ID, rawContactId);
 		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 
-		// address
+		// city
 		values.clear();
 		values.put(StructuredPostal.CITY, contact.city);
 		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
@@ -76,7 +76,23 @@ public class ContactsResolver extends Activity{
 		values.put(Data.RAW_CONTACT_ID, rawContactId);
 		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 		
-
+		// postal
+		values.clear();
+		values.put(StructuredPostal.POSTCODE, contact.postal);
+		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
+		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
+		values.put(Data.RAW_CONTACT_ID, rawContactId);
+		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
+		
+		// region
+		values.clear();
+		values.put(StructuredPostal.REGION, contact.nomos);
+		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
+		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
+		values.put(Data.RAW_CONTACT_ID, rawContactId);
+		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);		
+				
+		
 		return contactID;
 	}
 	

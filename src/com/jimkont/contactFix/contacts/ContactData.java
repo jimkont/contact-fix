@@ -25,7 +25,8 @@ public class ContactData {
 	public String 	address=""; 
 	public String 	nomos="";
 	public String 	postal="";
-	public String  telephone="";
+	public String   telephone="";
+	public String   country="";
 
 	public ContactData(){
 		displayName = "";
@@ -37,9 +38,10 @@ public class ContactData {
 		nomos="";
 		postal="";
 		telephone="";
+		country="";
 	}
 
-	public ContactData(String dn, String ln, String fn, String oc, String ct, String ad, String nm, String ps, String tl){
+	public ContactData(String dn, String ln, String fn, String oc, String ct, String ad, String nm, String ps, String tl, String cntr){
 		displayName = dn;
 		lastName=ln;
 		firstName=fn;
@@ -49,6 +51,7 @@ public class ContactData {
 		nomos=nm;
 		postal=ps;
 		telephone=tl;
+		country=cntr;
 	}
 
 	public String toString(){

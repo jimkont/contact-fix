@@ -49,19 +49,20 @@ public class ContactFix extends TabActivity
 				getString(R.string.tab_label_logs)).setIndicator(getString(R.string.tab_label_logs),
 				res.getDrawable(R.drawable.ic_tab_log)).setContent(intent);
 		tabHost.addTab(spec);
-		
-		intent = new Intent().setClass(this, SearchTab.class);
-		spec = tabHost.newTabSpec(
-				getString(R.string.tab_label_search)).setIndicator(getString(R.string.tab_label_search),
-				res.getDrawable(R.drawable.ic_tab_search)).setContent(intent);
-		tabHost.addTab(spec);
-
+/*TODO fix contacts
 		intent = new Intent().setClass(this, ContactsTab.class);
 		spec = tabHost.newTabSpec(
 				getString(R.string.tab_label_contacts)).setIndicator(getString(R.string.tab_label_contacts),
 				res.getDrawable(R.drawable.ic_tab_contact)).setContent(intent);
 		tabHost.addTab(spec);
-
+*/
+		intent = new Intent().setClass(this, SearchTab.class);
+		spec = tabHost.newTabSpec(
+				getString(R.string.tab_label_search)).setIndicator(getString(R.string.tab_label_search),
+				res.getDrawable(R.drawable.ic_tab_search)).setContent(intent);
+		tabHost.addTab(spec);
+		
+		
 		if (! Helper.hasInternetAccess(this) ){
 			//open network settings
 			new AlertDialog.Builder(this)
@@ -78,7 +79,9 @@ public class ContactFix extends TabActivity
                 }
             })
             .create()
-            .show();
+            //TODO un-comment .show()
+            //.show()
+            ;
 		}
 	}
 }
