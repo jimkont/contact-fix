@@ -44,6 +44,12 @@ public class ContactFix extends TabActivity
 		Intent intent;  // Reusable Intent for each tab
 
 		// Initialize a TabSpec for each tab and add it to the TabHost
+		intent = new Intent().setClass(this, LogsTab.class);
+		spec = tabHost.newTabSpec(
+				getString(R.string.tab_label_logs)).setIndicator(getString(R.string.tab_label_logs),
+				res.getDrawable(R.drawable.ic_tab_log)).setContent(intent);
+		tabHost.addTab(spec);
+		
 		intent = new Intent().setClass(this, SearchTab.class);
 		spec = tabHost.newTabSpec(
 				getString(R.string.tab_label_search)).setIndicator(getString(R.string.tab_label_search),
@@ -56,19 +62,14 @@ public class ContactFix extends TabActivity
 				res.getDrawable(R.drawable.ic_tab_contact)).setContent(intent);
 		tabHost.addTab(spec);
 
-		intent = new Intent().setClass(this, LogsTab.class);
-		spec = tabHost.newTabSpec(
-				getString(R.string.tab_label_logs)).setIndicator(getString(R.string.tab_label_logs),
-				res.getDrawable(R.drawable.ic_tab_log)).setContent(intent);
-		tabHost.addTab(spec);
-
 		if (! Helper.hasInternetAccess(this) ){
 			//open network settings
 			new AlertDialog.Builder(this)
             .setTitle(R.string.alert_no_network)
             .setPositiveButton(R.string.btn_net_settings, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
-                	ContactFix.this.getApplicationContext().startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                	//TODO open network settings
+                	//ContactFix.this.getApplicationContext().startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
                 }
             })
             .setNegativeButton(R.string.btn_net_exit, new DialogInterface.OnClickListener() {

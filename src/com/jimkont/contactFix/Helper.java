@@ -61,21 +61,6 @@ public class Helper {
 	    return list.size() > 0;
 	}
 	
-	public static long getContactId(Context context, long rawContactId) {
-		android.database.Cursor cur = null;
-		try {
-			cur = context.getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, new String[] { ContactsContract.RawContacts.CONTACT_ID }, ContactsContract.RawContacts._ID + "=" + rawContactId, null, null);
-			if (cur.moveToFirst()) {
-				return cur.getLong(cur.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (cur != null) {
-				cur.close();
-			}
-		}
-		return -1l;
-	}
+	
 
 }

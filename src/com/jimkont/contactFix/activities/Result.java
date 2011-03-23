@@ -22,6 +22,7 @@ import com.jimkont.contactFix.AsyncCallbackInterface;
 import com.jimkont.contactFix.Helper;
 import com.jimkont.contactFix.R;
 import com.jimkont.contactFix.contacts.ContactData;
+import com.jimkont.contactFix.contacts.ContactsResolver;
 import com.jimkont.contactFix.provider.*;
 
 import android.app.Activity;
@@ -61,6 +62,7 @@ public class Result extends Activity implements AsyncCallbackInterface{
 	private TextView res_city;
 	private TextView res_region;
 	private Button btn_AddUpdate;
+	private ContactData contact = null;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) 
@@ -78,42 +80,16 @@ public class Result extends Activity implements AsyncCallbackInterface{
 		setContentView(R.layout.result);
 
 		this.btn_AddUpdate = (Button)findViewById(R.id.result_btn_add_update);
+		this.btn_AddUpdate.setEnabled(false);
 		this.btn_AddUpdate.setOnClickListener(new OnClickListener() 
 		{
             public void onClick(View v) 
             {
-            	String name = "First Family";
-        		String phone = "0123456789";
-        		ContentValues values = new ContentValues();
-        		values.put(Data.DISPLAY_NAME, name);
-        		Uri rawContactUri = Result.this.getApplicationContext().getContentResolver().insert(RawContacts.CONTENT_URI, values);
-        		long rawContactId = ContentUris.parseId(rawContactUri);
-        		long contactId = Helper.getContactId(Result.this.getApplicationContext(), rawContactId);
-        		System.out.println("rawContactId = " + rawContactId);
-        		System.out.println("contactId = " + contactId);
-
-        		values.clear();
-        		values.put(Phone.NUMBER, phone);
-        		values.put(Phone.TYPE, Phone.TYPE_OTHER);
-        		values.put(Phone.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
-        		values.put(Data.RAW_CONTACT_ID, rawContactId);
-        		Result.this.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
-
-        		values.clear();
-        		values.put(Data.MIMETYPE, Data.CONTENT_TYPE);
-        		values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name);
-        		values.put(Data.RAW_CONTACT_ID, rawContactId);
-        		Result.this.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
-
-        		values.clear();
-        		values.put(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE);
-        		values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, name);
-        		values.put(Data.RAW_CONTACT_ID, rawContactId);
-        		Result.this.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
-
-
-        		Uri myPerson = ContentUris.withAppendedId
-        		(ContactsContract.Contacts.CONTENT_URI, contactId);
+            	
+            	long contactID = ContactsResolver.createNewContact(Result.this, contact);
+            	
+            	Uri myPerson = ContentUris.withAppendedId
+        		(ContactsContract.Contacts.CONTENT_URI, contactID);
         		Intent intent = new Intent(Intent.ACTION_EDIT,myPerson);
         		startActivity(intent);
 
@@ -143,6 +119,7 @@ public class Result extends Activity implements AsyncCallbackInterface{
 		
     	if (contact == null)
     	{
+    		this.btn_AddUpdate.setEnabled(true);
     		Toast toast = Toast.makeText(getApplicationContext(), R.string.alert_number_not_found, Toast.LENGTH_LONG);
     		toast.show();
     		this.finish();
