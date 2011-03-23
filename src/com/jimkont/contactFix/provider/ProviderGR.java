@@ -72,20 +72,20 @@ public class ProviderGR extends ProviderHTTPPost
 			params.add(new BasicNameValuePair("Image81.x", "0"));
 			params.add(new BasicNameValuePair("Image81.y", "0"));
 	        
-	        //html = executePost("http://www.whitepages.gr/gr/results.aspx", params );
-	        //getContact(html);
+	        html = executePost("http://www.whitepages.gr/gr/results.aspx", params );
+	        getContact(html);
 			 
-	        cn = new ContactData();
-			cn.displayName = "Kontokostas Dimitris";
-			cn.lastName="Kontokostas";
-			cn.firstName="Dimitris";
-			//cn.occupation="Teacher"; 
-			cn.city="Veria";
-			cn.address="Trempesinas 18"; 
-			cn.nomos="Imathia";
-			cn.postal="59100";
-			cn.telephone="2331025316";
-			cn.country="Greece";
+//	        cn = new ContactData();
+//			cn.displayName = "Kontokostas Dimitris";
+//			cn.lastName="Kontokostas";
+//			cn.firstName="Dimitris";
+//			//cn.occupation="Teacher"; 
+//			cn.city="Veria";
+//			cn.address="Trempesinas 18"; 
+//			cn.nomos="Imathia";
+//			cn.postal="59100";
+//			cn.telephone="2331025316";
+//			cn.country="Greece";
 			
 	        return cn;
 			

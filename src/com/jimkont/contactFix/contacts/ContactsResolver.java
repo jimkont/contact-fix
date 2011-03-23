@@ -49,6 +49,7 @@ public class ContactsResolver extends Activity{
 		values.put(Data.RAW_CONTACT_ID, rawContactID);
 		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 
+		
 		// number
 		values.clear();
 		values.put(Phone.NUMBER, contact.telephone);
