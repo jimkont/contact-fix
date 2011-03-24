@@ -63,14 +63,21 @@ public class ContactFix extends TabActivity
 		tabHost.addTab(spec);
 		
 		
-		if (! Helper.hasInternetAccess(this) ){
+		if ( Helper.hasInternetAccess(this) )
+		{
 			//open network settings
 			new AlertDialog.Builder(this)
             .setTitle(R.string.alert_no_network)
             .setPositiveButton(R.string.btn_net_settings, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
-                	//TODO open network settings
-                	//ContactFix.this.getApplicationContext().startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                	try {
+                		Intent i = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                		ContactFix.this.getApplicationContext().startActivity(i);
+                	}
+                	catch (Exception e){
+                		//TODO message user Toast
+                	}
                 }
             })
             .setNegativeButton(R.string.btn_net_exit, new DialogInterface.OnClickListener() {
@@ -79,8 +86,7 @@ public class ContactFix extends TabActivity
                 }
             })
             .create()
-            //TODO un-comment .show()
-            //.show()
+            .show()
             ;
 		}
 	}
