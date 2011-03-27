@@ -30,15 +30,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class SearchTab extends Activity {
-	
-	private Button   btn_search_manual;
-	private EditText txt_search_manual;
-	
-	@Override
+
+    private Button   btn_search_manual;
+    private EditText txt_search_manual;
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_search);
-    
+
         this.txt_search_manual = (EditText) this.findViewById(R.id.entry);
         //this.txt_search_manual.setText("2331020043");
 
@@ -46,26 +46,26 @@ public class SearchTab extends Activity {
         this.btn_search_manual = (Button)this.findViewById(R.id.tab_search_btn);
         this.btn_search_manual.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-            	
-            	String tmp = txt_search_manual.getText().toString();
-            	if (!ProviderGR.validateTelephone(tmp)) {
-            		
-            		AlertDialog.Builder alertbox = new AlertDialog.Builder(SearchTab.this);
+
+                String tmp = txt_search_manual.getText().toString();
+                if (!ProviderGR.validateTelephone(tmp)) {
+
+                    AlertDialog.Builder alertbox = new AlertDialog.Builder(SearchTab.this);
                     if (tmp.length()==10 && tmp.charAt(0)!= '2')
-                    	alertbox.setMessage(getString(R.string.alert_not_landline));
+                        alertbox.setMessage(getString(R.string.alert_not_landline));
                     else
-                    	alertbox.setMessage(getString(R.string.alert_incorrect_number));  
+                        alertbox.setMessage(getString(R.string.alert_incorrect_number));  
                     alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {}
                     });
                     alertbox.show();
-            		return;
-            	}
-            	
-            	Intent newIntent = new Intent(SearchTab.this.getApplicationContext(), Result.class);
-            	newIntent.putExtra("telephone", tmp);
-            	startActivity(newIntent);
+                    return;
+                }
+
+                Intent newIntent = new Intent(SearchTab.this.getApplicationContext(), Result.class);
+                newIntent.putExtra("telephone", tmp);
+                startActivity(newIntent);
             }
-          });    
-	}
+        });    
+    }
 }

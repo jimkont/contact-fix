@@ -40,65 +40,65 @@ import com.jimkont.contactFix.contacts.ContactData;
 
 abstract class ProviderHTTPPost extends AsyncTask<String, Void, ContactData>
 {
-	protected static final int REGISTRATION_TIMEOUT = 30 * 1000; // ms
-	protected static HttpClient mHttpClient;
-	protected String telephone;
-	protected String html = null;
-	protected ContactData cn = null;
-	public ContactData getContactData(){return cn;}
-	
-	protected AsyncCallbackInterface activity;
-	
-	abstract protected  ContactData getContents(String tel);
-	
-	abstract protected void getContact(String html);
-	
-	/* validate number according to provider */
-	public static boolean validateTelephone(String number)	
-	{
-		return false;
-	}
+    protected static final int REGISTRATION_TIMEOUT = 30 * 1000; // ms
+    protected static HttpClient mHttpClient;
+    protected String telephone;
+    protected String html = null;
+    protected ContactData cn = null;
+    public ContactData getContactData(){return cn;}
 
-	public ProviderHTTPPost(AsyncCallbackInterface act) 
-	{
-		activity = act;
-	}
-		
-	protected ContactData doInBackground(String... params) 
-	{
+    protected AsyncCallbackInterface activity;
+
+    abstract protected  ContactData getContents(String tel);
+
+    abstract protected void getContact(String html);
+
+    /* validate number according to provider */
+    public static boolean validateTelephone(String number)	
+    {
+        return false;
+    }
+
+    public ProviderHTTPPost(AsyncCallbackInterface act) 
+    {
+        activity = act;
+    }
+
+    protected ContactData doInBackground(String... params) 
+    {
         // params comes from the execute() call: params[0] is the telephone.
         return getContents(params[0]);
-	}
-	
-	protected void onPreExecute()
-	{
-		super.onPreExecute();
-		
-	}
-
-	protected void onPostExecute(ContactData result) 
-	{
-		super.onPostExecute(result);
-		activity.onGetResults();
     }
-	/*
+
+    protected void onPreExecute()
+    {
+        super.onPreExecute();
+
+    }
+
+    protected void onPostExecute(ContactData result) 
+    {
+        super.onPostExecute(result);
+        activity.onGetResults();
+    }
+    /*
 	protected void onProgressUpdate(Void... values) 
 	{
 		super.onProgressUpdate(values);
 	}
-*/
-	
+     */
 
-	
-	
-	public static void maybeCreateHttpClient() 
-	{
+
+
+
+    public static void maybeCreateHttpClient() 
+    {
         if (mHttpClient == null) 
         {
             mHttpClient = new DefaultHttpClient();
             final HttpParams params = mHttpClient.getParams();
             HttpConnectionParams.setConnectionTimeout(params,
-                REGISTRATION_TIMEOUT);
+                    REGISTRATION_TIMEOUT);
             HttpConnectionParams.setSoTimeout(params, REGISTRATION_TIMEOUT);
             ConnManagerParams.setTimeout(params, REGISTRATION_TIMEOUT);
         }
@@ -111,7 +111,7 @@ abstract class ProviderHTTPPost extends AsyncTask<String, Void, ContactData>
     {
         final ResponseHandler<String> responseHandler;
 
-        
+
         HttpEntity entity = null;
         try 
         {
@@ -129,18 +129,18 @@ abstract class ProviderHTTPPost extends AsyncTask<String, Void, ContactData>
 
         try 
         {
-        	responseHandler = new BasicResponseHandler();
-        	String responseBody = mHttpClient.execute(post, responseHandler);
-        	return responseBody ;
+            responseHandler = new BasicResponseHandler();
+            String responseBody = mHttpClient.execute(post, responseHandler);
+            return responseBody ;
         } catch (final IOException e) 
         {
-            
+
             return null;
         } 
         finally 
         {
-            
+
         }
     }
-	
+
 }

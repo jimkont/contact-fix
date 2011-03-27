@@ -17,5 +17,5 @@
 package com.jimkont.contactFix;
 
 public interface AsyncCallbackInterface {
-	public void onGetResults();
+    public void onGetResults();
 }
