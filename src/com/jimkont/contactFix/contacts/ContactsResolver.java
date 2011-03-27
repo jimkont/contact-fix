@@ -29,6 +29,7 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 
 public class ContactsResolver extends Activity{
 
+    //TODO convert to batch method (example http://developer.android.com/reference/android/provider/ContactsContract.RawContacts.html)
     public static long createNewContact(Activity activity, ContactData contact){
 
         ContentValues values = new ContentValues();

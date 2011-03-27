@@ -30,22 +30,23 @@ public final class R {
         public static final int tab_manual=0x7f020010;
     }
     public static final class id {
-        public static final int entry=0x7f04000f;
-        public static final int result_address=0x7f040005;
-        public static final int result_btn_add_update=0x7f040008;
-        public static final int result_city_postal=0x7f040006;
-        public static final int result_header=0x7f040001;
-        public static final int result_name=0x7f040003;
-        public static final int result_occupation=0x7f040004;
-        public static final int result_region=0x7f040007;
-        public static final int result_table=0x7f040002;
-        public static final int tab_contact_btn_search=0x7f04000a;
-        public static final int tab_contact_info=0x7f040009;
-        public static final int tab_logs_viewitem_date=0x7f04000d;
-        public static final int tab_logs_viewitem_number=0x7f04000c;
-        public static final int tab_logs_viewitem_type=0x7f04000b;
-        public static final int tab_search_btn=0x7f040010;
-        public static final int tab_search_info=0x7f04000e;
+        public static final int contacts_pick_contact=0x7f040001;
+        public static final int entry=0x7f040010;
+        public static final int result_address=0x7f040006;
+        public static final int result_btn_add_update=0x7f040009;
+        public static final int result_city_postal=0x7f040007;
+        public static final int result_header=0x7f040002;
+        public static final int result_name=0x7f040004;
+        public static final int result_occupation=0x7f040005;
+        public static final int result_region=0x7f040008;
+        public static final int result_table=0x7f040003;
+        public static final int tab_contact_btn_search=0x7f04000b;
+        public static final int tab_contact_info=0x7f04000a;
+        public static final int tab_logs_viewitem_date=0x7f04000e;
+        public static final int tab_logs_viewitem_number=0x7f04000d;
+        public static final int tab_logs_viewitem_type=0x7f04000c;
+        public static final int tab_search_btn=0x7f040011;
+        public static final int tab_search_info=0x7f04000f;
         public static final int tag_logtabitem=0x7f040000;
     }
     public static final class layout {

@@ -16,6 +16,9 @@
 
 package com.jimkont.contactFix.activities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.jimkont.contactFix.R;
 
 import android.app.Activity;
@@ -32,78 +35,78 @@ import android.widget.Toast;
 
 public class ContactsTab extends Activity {
     Toast mToast;
-    ResultDisplayer mPendingResult;
     Button btn_search_contacts;
+    Uri uri;
+    List<String> phones = new ArrayList<String>();
 
-    class ResultDisplayer implements OnClickListener {
-        String mMsg;
-        String mMimeType;
-
-        ResultDisplayer(String msg, String mimeType) {
-            mMsg = msg;
-            mMimeType = mimeType;
-        }
-
-        public void onClick(View v) {
-            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setType(mMimeType);
-            mPendingResult = this;
-            startActivityForResult(intent, 1);
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_contacts);
 
-        selectContactNumber();
+        pickContact();
 
         this.btn_search_contacts = (Button)this.findViewById(R.id.tab_contact_btn_search);
         this.btn_search_contacts.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
 
-                selectContactNumber();
+                pickContact();
             }
         });    
 
     }//onCreate
 
+    protected void pickContact() {
+        //contact number picker
+        startActivityForResult(
+                new Intent(Intent.ACTION_PICK,
+                        Uri.parse("content://contacts/people")),
+                        R.id.contacts_pick_contact);
+
+    }
+
     protected void selectContactNumber()
     {
-        //contact number picker
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-        startActivityForResult(intent, 1);
+        /*
+         It is easy to find all raw contacts in a Contact:
+
+
+          Cursor c = getContentResolver().query(RawContacts.CONTENT_URI,
+          new String[]{RawContacts._ID, RawContacts.ACCOUNT_NAME},
+          RawContacts.CONTACT_ID + "=?",
+          new String[]{String.valueOf(contactId)}, null);
+
+         * */
+
+
+        /*
+
+        Finding all Data of a given type for a given raw contact
+
+     Cursor c = getContentResolver().query(Data.CONTENT_URI,
+              new String[] {Data._ID, Phone.NUMBER, Phone.TYPE, Phone.LABEL},
+              Data.RAW_CONTACT_ID + "=?" + " AND "
+                      + Data.MIMETYPE + "='" + Phone.CONTENT_ITEM_TYPE + "'",
+              new String[] {String.valueOf(rawContactId)}, null);
+
+         */
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null) {
-            Uri uri = data.getData();
-            if (uri != null) {
-                Cursor c = null;
-                try {
-                    c = getContentResolver().query(uri, new String[] { BaseColumns._ID },
-                            null, null, null);
-                    if (c != null && c.moveToFirst()) {
-                        int id = c.getInt(0);
-                        if (mToast != null) {
-                            mToast.cancel();
-                        }
-                        String txt = mPendingResult.mMsg + ":\n" + uri + "\nid: " + id;
-                        mToast = Toast.makeText(this, txt, Toast.LENGTH_LONG);
-                        mToast.show();
-                    }
-                } finally {
-                    if (c != null) {
-                        c.close();
-                    }
-                }
+        if (requestCode == R.id.contacts_pick_contact) {
+            if (resultCode == RESULT_OK) {
+                String contactID = data.getData().getLastPathSegment();
+                //String contactID.getLastPathSegment();
+                Toast toast = Toast.makeText(getApplicationContext(), contactID, Toast.LENGTH_LONG);
+                toast.show();
+
             }
         }
     }
 
-
+    /*
     protected void getContactInfo(Intent intent)
     {
 
@@ -145,17 +148,17 @@ public class ContactsTab extends Activity {
                     null, null);
             while (address.moveToNext()) 
             { 
-                /*            // These are all private class variables, don't forget to create them.
+                            // These are all private class variables, don't forget to create them.
             poBox      = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POBOX));
             street     = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));
             city       = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CITY));
             state      = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.REGION));
             postalCode = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE));
             country    = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY));
-            type       = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.TYPE));*/
+            type       = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.TYPE));
             }  //address.moveToNext()   
         }  //while (cursor.moveToNext())        
-        //cursor.close(); */
+        //cursor.close(); 
     }//getContactInfo
-
+     */
 }
