@@ -29,73 +29,72 @@ import android.provider.ContactsContract.CommonDataKinds.StructuredName;
 
 public class ContactsResolver extends Activity{
 
-	public static long createNewContact(Activity activity, ContactData contact){
+    public static long createNewContact(Activity activity, ContactData contact){
 
-		ContentValues values = new ContentValues();
-		values.put(Data.DISPLAY_NAME, contact.displayName);
-		Uri rawContactUri = activity.getApplicationContext().getContentResolver().insert(RawContacts.CONTENT_URI, values);
-		long rawContactID = ContentUris.parseId(rawContactUri);
-		long contactID = getContactId(activity.getApplicationContext(), rawContactID);
+        ContentValues values = new ContentValues();
+        values.put(Data.DISPLAY_NAME, contact.displayName);
+        Uri rawContactUri = activity.getApplicationContext().getContentResolver().insert(RawContacts.CONTENT_URI, values);
+        long rawContactID = ContentUris.parseId(rawContactUri);
+        long contactID = getContactId(activity.getApplicationContext(), rawContactID);
 
-		values.clear();
-		values.put(Data.MIMETYPE, Data.CONTENT_TYPE);
-		values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.displayName);
-		values.put(Data.RAW_CONTACT_ID, rawContactID);
-		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
+        values.clear();
+        values.put(Data.MIMETYPE, Data.CONTENT_TYPE);
+        values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.displayName);
+        values.put(Data.RAW_CONTACT_ID, rawContactID);
+        activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 
-		values.clear();
-		values.put(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE);
-		values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.displayName);
-		values.put(Data.RAW_CONTACT_ID, rawContactID);
-		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
+        values.clear();
+        values.put(Data.MIMETYPE, StructuredName.CONTENT_ITEM_TYPE);
+        values.put(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, contact.displayName);
+        values.put(Data.RAW_CONTACT_ID, rawContactID);
+        activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 
-		
-		// number
-		values.clear();
-		values.put(Phone.NUMBER, contact.telephone);
-		values.put(Phone.TYPE, Phone.TYPE_OTHER);
-		values.put(Phone.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
-		values.put(Data.RAW_CONTACT_ID, rawContactID);
-		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
+        // number
+        values.clear();
+        values.put(Phone.NUMBER, contact.telephone);
+        values.put(Phone.TYPE, Phone.TYPE_OTHER);
+        values.put(Phone.MIMETYPE, Phone.CONTENT_ITEM_TYPE);
+        values.put(Data.RAW_CONTACT_ID, rawContactID);
+        activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
 
-		updateContactAddress(activity, contact, rawContactID);
-		
-		return contactID;
-	}
-	
-	public static void updateContactAddress(Activity activity, ContactData contact, long rawContactID){
+        updateContactAddress(activity, contact, rawContactID);
 
-		// address
-		ContentValues values = new ContentValues();
-		values.put(StructuredPostal.STREET, contact.address);
-		values.put(StructuredPostal.CITY, contact.city);
-		values.put(StructuredPostal.POSTCODE, contact.postal);
-		values.put(StructuredPostal.REGION, contact.nomos);
-		values.put(StructuredPostal.COUNTRY, contact.country);
-		values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
-		values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
-		values.put(Data.RAW_CONTACT_ID, rawContactID);
-		activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
+        return contactID;
+    }
 
-		//return contactID;
-	}
-	
-	public static long getContactId(Context context, long rawContactId) {
-		android.database.Cursor cur = null;
-		try {
-			cur = context.getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, new String[] { ContactsContract.RawContacts.CONTACT_ID }, ContactsContract.RawContacts._ID + "=" + rawContactId, null, null);
-			if (cur.moveToFirst()) {
-				return cur.getLong(cur.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (cur != null) {
-				cur.close();
-			}
-		}
-		return -1l;
-	}
+    public static void updateContactAddress(Activity activity, ContactData contact, long rawContactID){
+
+        // address
+        ContentValues values = new ContentValues();
+        values.put(StructuredPostal.STREET, contact.address);
+        values.put(StructuredPostal.CITY, contact.city);
+        values.put(StructuredPostal.POSTCODE, contact.postal);
+        values.put(StructuredPostal.REGION, contact.nomos);
+        values.put(StructuredPostal.COUNTRY, contact.country);
+        values.put(StructuredPostal.TYPE, StructuredPostal.TYPE_OTHER);
+        values.put(StructuredPostal.MIMETYPE, StructuredPostal.CONTENT_ITEM_TYPE);
+        values.put(Data.RAW_CONTACT_ID, rawContactID);
+        activity.getApplicationContext().getContentResolver().insert(Data.CONTENT_URI, values);
+
+        //return contactID;
+    }
+
+    public static long getContactId(Context context, long rawContactId) {
+        android.database.Cursor cur = null;
+        try {
+            cur = context.getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, new String[] { ContactsContract.RawContacts.CONTACT_ID }, ContactsContract.RawContacts._ID + "=" + rawContactId, null, null);
+            if (cur.moveToFirst()) {
+                return cur.getLong(cur.getColumnIndex(ContactsContract.RawContacts.CONTACT_ID));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
+        }
+        return -1l;
+    }
 
 
-	}
+}

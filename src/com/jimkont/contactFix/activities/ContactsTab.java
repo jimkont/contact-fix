@@ -31,121 +31,121 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class ContactsTab extends Activity {
-	Toast mToast;
-	ResultDisplayer mPendingResult;
-	Button btn_search_contacts;
+    Toast mToast;
+    ResultDisplayer mPendingResult;
+    Button btn_search_contacts;
 
-	class ResultDisplayer implements OnClickListener {
-		String mMsg;
-		String mMimeType;
+    class ResultDisplayer implements OnClickListener {
+        String mMsg;
+        String mMimeType;
 
-		ResultDisplayer(String msg, String mimeType) {
-			mMsg = msg;
-			mMimeType = mimeType;
-		}
+        ResultDisplayer(String msg, String mimeType) {
+            mMsg = msg;
+            mMimeType = mimeType;
+        }
 
-		public void onClick(View v) {
-			Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-			intent.setType(mMimeType);
-			mPendingResult = this;
-			startActivityForResult(intent, 1);
-		}
-	}
+        public void onClick(View v) {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType(mMimeType);
+            mPendingResult = this;
+            startActivityForResult(intent, 1);
+        }
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tab_contacts);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.tab_contacts);
 
-		selectContactNumber();
+        selectContactNumber();
 
-		this.btn_search_contacts = (Button)this.findViewById(R.id.tab_contact_btn_search);
-		this.btn_search_contacts.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
+        this.btn_search_contacts = (Button)this.findViewById(R.id.tab_contact_btn_search);
+        this.btn_search_contacts.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
 
-				selectContactNumber();
-			}
-		});    
+                selectContactNumber();
+            }
+        });    
 
-	}//onCreate
+    }//onCreate
 
-	protected void selectContactNumber()
-	{
-		//contact number picker
-		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-		intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-		startActivityForResult(intent, 1);
-	}
+    protected void selectContactNumber()
+    {
+        //contact number picker
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+        startActivityForResult(intent, 1);
+    }
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (data != null) {
-			Uri uri = data.getData();
-			if (uri != null) {
-				Cursor c = null;
-				try {
-					c = getContentResolver().query(uri, new String[] { BaseColumns._ID },
-							null, null, null);
-					if (c != null && c.moveToFirst()) {
-						int id = c.getInt(0);
-						if (mToast != null) {
-							mToast.cancel();
-						}
-						String txt = mPendingResult.mMsg + ":\n" + uri + "\nid: " + id;
-						mToast = Toast.makeText(this, txt, Toast.LENGTH_LONG);
-						mToast.show();
-					}
-				} finally {
-					if (c != null) {
-						c.close();
-					}
-				}
-			}
-		}
-	}
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data != null) {
+            Uri uri = data.getData();
+            if (uri != null) {
+                Cursor c = null;
+                try {
+                    c = getContentResolver().query(uri, new String[] { BaseColumns._ID },
+                            null, null, null);
+                    if (c != null && c.moveToFirst()) {
+                        int id = c.getInt(0);
+                        if (mToast != null) {
+                            mToast.cancel();
+                        }
+                        String txt = mPendingResult.mMsg + ":\n" + uri + "\nid: " + id;
+                        mToast = Toast.makeText(this, txt, Toast.LENGTH_LONG);
+                        mToast.show();
+                    }
+                } finally {
+                    if (c != null) {
+                        c.close();
+                    }
+                }
+            }
+        }
+    }
 
 
-	protected void getContactInfo(Intent intent)
-	{
+    protected void getContactInfo(Intent intent)
+    {
 
-		Cursor cursor =  managedQuery(intent.getData(), null, null, null, null);      
-		while (cursor.moveToNext()) 
-		{           
-			String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-			String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME)); 
+        Cursor cursor =  managedQuery(intent.getData(), null, null, null, null);      
+        while (cursor.moveToNext()) 
+        {           
+            String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME)); 
 
-			String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+            String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
 
-			if ( hasPhone.equalsIgnoreCase("1"))
-				hasPhone = "true";
-			else
-				hasPhone = "false" ;
+            if ( hasPhone.equalsIgnoreCase("1"))
+                hasPhone = "true";
+            else
+                hasPhone = "false" ;
 
-			if (Boolean.parseBoolean(hasPhone)) 
-			{
-				Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
-				while (phones.moveToNext()) 
-				{
-					String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-				}
-				phones.close();
-			}
+            if (Boolean.parseBoolean(hasPhone)) 
+            {
+                Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId,null, null);
+                while (phones.moveToNext()) 
+                {
+                    String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                }
+                phones.close();
+            }
 
-			// Find Email Addresses
-			Cursor emails = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId,null, null);
-			while (emails.moveToNext()) 
-			{
-				String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-			}
-			emails.close();
+            // Find Email Addresses
+            Cursor emails = getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId,null, null);
+            while (emails.moveToNext()) 
+            {
+                String emailAddress = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+            }
+            emails.close();
 
-			Cursor address = getContentResolver().query(
-					ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,
-					null,
-					ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID + " = " + contactId,
-					null, null);
-			while (address.moveToNext()) 
-			{ 
-				/*            // These are all private class variables, don't forget to create them.
+            Cursor address = getContentResolver().query(
+                    ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,
+                    null,
+                    ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID + " = " + contactId,
+                    null, null);
+            while (address.moveToNext()) 
+            { 
+                /*            // These are all private class variables, don't forget to create them.
             poBox      = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POBOX));
             street     = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.STREET));
             city       = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.CITY));
@@ -153,9 +153,9 @@ public class ContactsTab extends Activity {
             postalCode = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE));
             country    = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY));
             type       = address.getString(address.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.TYPE));*/
-			}  //address.moveToNext()   
-		}  //while (cursor.moveToNext())        
-		//cursor.close(); */
-	}//getContactInfo
+            }  //address.moveToNext()   
+        }  //while (cursor.moveToNext())        
+        //cursor.close(); */
+    }//getContactInfo
 
 }

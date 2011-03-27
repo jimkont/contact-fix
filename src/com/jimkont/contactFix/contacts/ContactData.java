@@ -17,53 +17,53 @@
 package com.jimkont.contactFix.contacts;
 
 public class ContactData {
-	public String 	displayName = "";
-	public String 	lastName="";
-	public String 	firstName="";
-	public String 	occupation=""; 
-	public String 	city="";
-	public String 	address=""; 
-	public String 	nomos="";
-	public String 	postal="";
-	public String   telephone="";
-	public String   country="";
+    public String displayName = "";
+    public String lastName="";
+    public String firstName="";
+    public String occupation=""; 
+    public String city="";
+    public String address=""; 
+    public String nomos="";
+    public String postal="";
+    public String telephone="";
+    public String country="";
 
-	public ContactData(){
-		displayName = "";
-		lastName="";
-		firstName="";
-		occupation=""; 
-		city="";
-		address=""; 
-		nomos="";
-		postal="";
-		telephone="";
-		country="";
-	}
+    public ContactData(){
+        displayName = "";
+        lastName="";
+        firstName="";
+        occupation=""; 
+        city="";
+        address=""; 
+        nomos="";
+        postal="";
+        telephone="";
+        country="";
+    }
 
-	public ContactData(String dn, String ln, String fn, String oc, String ct, String ad, String nm, String ps, String tl, String cntr){
-		displayName = dn;
-		lastName=ln;
-		firstName=fn;
-		occupation=oc; 
-		city=ct;
-		address=ad; 
-		nomos=nm;
-		postal=ps;
-		telephone=tl;
-		country=cntr;
-	}
+    public ContactData(String dn, String ln, String fn, String oc, String ct, String ad, String nm, String ps, String tl, String cntr){
+        displayName = dn;
+        lastName=ln;
+        firstName=fn;
+        occupation=oc; 
+        city=ct;
+        address=ad; 
+        nomos=nm;
+        postal=ps;
+        telephone=tl;
+        country=cntr;
+    }
 
-	public String toString(){
-		String retStr = displayName;
-		if (lastName!="") retStr+= "\n" + lastName;
-		if (firstName!="") retStr+= "\n" + firstName;
-		if (occupation!="") retStr+= "\n" + occupation;
-		if (city!="") retStr+= "\n" + city;
-		if (address!="") retStr+= "\n" + address;
-		if (nomos!="") retStr+= "\n" + nomos;
-		if (postal!="") retStr+= "\n" + postal;
-		if (telephone!="") retStr+= "\n" + telephone;
-		return 	retStr;
-	}
+    public String toString(){
+        String retStr = displayName;
+        if (lastName!="") retStr+= "\n" + lastName;
+        if (firstName!="") retStr+= "\n" + firstName;
+        if (occupation!="") retStr+= "\n" + occupation;
+        if (city!="") retStr+= "\n" + city;
+        if (address!="") retStr+= "\n" + address;
+        if (nomos!="") retStr+= "\n" + nomos;
+        if (postal!="") retStr+= "\n" + postal;
+        if (telephone!="") retStr+= "\n" + telephone;
+        return 	retStr;
+    }
 }
