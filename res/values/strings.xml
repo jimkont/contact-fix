@@ -13,8 +13,8 @@
 	<string name="tab_search_btn">Search Number</string>
 	
 	<!--contact search tab-->
-	<string name="tab_contact_info">Search in contacts</string>
-	<string name="tab_contact_btn_search">Search contacts</string>
+	<string name="tab_contact_info">Search in Contacts</string>
+	<string name="tab_contact_btn_search">Search Contacts</string>
 	
 	<!--result activity	-->
 	<string name="result_header">Search for </string><string name="result_contacts_add">Add to contacts</string>

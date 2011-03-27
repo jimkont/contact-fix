@@ -22,7 +22,7 @@ android:orientation="vertical"  >
 	       android:layout_width="wrap_content"
 	       android:layout_height="wrap_content"
 	       android:layout_gravity="center"
-	       android:drawableRight="@drawable/ic_tab_contact_selected"
+	       android:drawableRight="@drawable/ic_tab_search_selected"
 	       android:drawablePadding="5sp"
 	       android:text="@string/tab_contact_btn_search"/>
 	</LinearLayout>
